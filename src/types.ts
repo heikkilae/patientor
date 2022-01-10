@@ -26,3 +26,17 @@ export interface Entry {
 export interface ExtendedPatient extends Patient {
   entries: Entry[];
 }
+
+export type Action =
+  | {
+      type: "SET_PATIENT_LIST";
+      payload: Patient[];
+    }
+  | {
+      type: "ADD_PATIENT";
+      payload: Patient;
+    }
+  | {
+      type: "ADD_EXTENDEDPATIENT";
+      payload: ExtendedPatient;
+    };

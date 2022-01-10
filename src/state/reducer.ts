@@ -1,19 +1,5 @@
 import { State } from "./state";
-import { Patient, ExtendedPatient } from "../types";
-
-export type Action =
-  | {
-      type: "SET_PATIENT_LIST";
-      payload: Patient[];
-    }
-  | {
-      type: "ADD_PATIENT";
-      payload: Patient;
-    }
-  | {
-      type: "ADD_EXTENDEDPATIENT";
-      payload: ExtendedPatient;
-    };
+import { Patient, Action, ExtendedPatient } from "../types";
 
 export const reducer = (state: State, action: Action): State => {
   switch (action.type) {
@@ -47,4 +33,25 @@ export const reducer = (state: State, action: Action): State => {
     default:
       return state;
   }
+};
+
+export const setPatientList = (payload: Patient[]): Action => {
+  return {
+    type: "SET_PATIENT_LIST",
+    payload: payload
+  };
+};
+
+export const addPatient = (payload: Patient): Action => {
+  return {
+    type: "ADD_PATIENT",
+    payload: payload
+  };
+};
+
+export const addExtendedPatient = (payload: ExtendedPatient): Action => {
+  return {
+    type: "ADD_EXTENDEDPATIENT",
+    payload: payload
+  };
 };
