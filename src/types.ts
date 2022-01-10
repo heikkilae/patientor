@@ -18,3 +18,11 @@ export interface Patient {
   ssn?: string;
   dateOfBirth?: string;
 }
+
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface Entry {
+}
+
+export interface ExtendedPatient extends Patient {
+  entries: Entry[];
+}
