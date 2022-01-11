@@ -2,6 +2,7 @@ import axios from "axios";
 import React from "react";
 import { useParams } from "react-router-dom";
 import { Header, Icon } from "semantic-ui-react";
+import EntryDetails from "../components/EntryDetails";
 import { apiBaseUrl } from "../constants";
 import { addExtendedPatient, setDiagnosistList, useStateValue } from "../state";
 import { Diagnosis, ExtendedPatient } from "../types";
@@ -61,18 +62,8 @@ const PatientPage = () => {
         ssn: {patient.ssn} <br />
         occupation: {patient.occupation}
       </p>
-        {patient.entries.map(entry => {
-          return (
-            <>
-              <p key={entry.id}>{entry.date} {entry.description}</p>
-              <ul>
-                {entry.diagnosisCodes?.map(code => {
-                  return (<li key={code}>{code} {diagnoses[code].name}</li>);
-                })}
-              </ul>
-          </>
-          );
-        })}
+        {patient.entries.map((entry, i) => <EntryDetails key={i} entry={entry} diagnoses={diagnoses} />
+        )}
     </>
   );
 };
