@@ -3,17 +3,29 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { Header, Icon } from "semantic-ui-react";
 import { apiBaseUrl } from "../constants";
-import { addExtendedPatient, useStateValue } from "../state";
-import { ExtendedPatient } from "../types";
+import { addExtendedPatient, setDiagnosistList, useStateValue } from "../state";
+import { Diagnosis, ExtendedPatient } from "../types";
 
 const PatientPage = () => {
   const { id } = useParams<{ id: string | undefined }>();
 
   if (!id) return null;
 
-  const [{ extendedPatients }, dispatch] = useStateValue();
+  const [{ extendedPatients, diagnoses }, dispatch] = useStateValue();
 
   React.useEffect(() => {
+    const fetchDiagnosisList = async () => {
+      try {
+        const { data: diagnosisListFromApi } = await axios.get<Diagnosis[]>(
+          `${apiBaseUrl}/diagnoses`
+        );
+        dispatch(setDiagnosistList(diagnosisListFromApi));
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    void fetchDiagnosisList();
+
     if (extendedPatients[id]) {
       console.log("ePatient already in state");
       return;
@@ -55,7 +67,7 @@ const PatientPage = () => {
               <p key={entry.id}>{entry.date} {entry.description}</p>
               <ul>
                 {entry.diagnosisCodes?.map(code => {
-                  return (<li key={code}>{code}</li>);
+                  return (<li key={code}>{code} {diagnoses[code].name}</li>);
                 })}
               </ul>
           </>

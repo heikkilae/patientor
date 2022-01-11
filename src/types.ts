@@ -81,4 +81,8 @@ export type Action =
   | {
       type: "ADD_EXTENDEDPATIENT";
       payload: ExtendedPatient;
+    }
+  | {
+      type: "SET_DIAGNOSES_LIST";
+      payload: Diagnosis[];
     };
