@@ -85,4 +85,9 @@ export type Action =
   | {
       type: "SET_DIAGNOSES_LIST";
       payload: Diagnosis[];
+    }
+  | {
+      type: "ADD_ENTRY_FOR_PATIENT";
+      id: string,
+      payload: HealthCheckEntry;
     };

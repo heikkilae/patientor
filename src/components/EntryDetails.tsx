@@ -1,5 +1,5 @@
 import React from "react";
-import { Diagnosis, Entry } from "../types";
+import { Diagnosis, Entry, HealthCheckRating } from "../types";
 import { Card, Icon } from "semantic-ui-react";
 
  const assertNever = (value: never): never => {
@@ -18,13 +18,13 @@ const EntryDetails: React.FC<{ entry: Entry, diagnoses: { [code: string]: Diagno
             <Card.Description>{entry.description}</Card.Description>
             <ul>
               {entry.diagnosisCodes?.map(code => {
-                return (<li key={code}>{code} {diagnoses[code].name}</li>);
+                return (<li key={code}>{code} {diagnoses[code]?.name}</li>);
               })}
             </ul>
-            {entry.healthCheckRating === 0 && <Icon color="green" name="heart" /> }
-            {entry.healthCheckRating === 1 && <Icon color="yellow" name="heart" /> }
-            {entry.healthCheckRating === 2 && <Icon color="orange" name="heart" /> }
-            {entry.healthCheckRating === 3 && <Icon color="red" name="heart" /> }
+            {entry.healthCheckRating === HealthCheckRating.Healthy && <Icon color="green" name="heart" /> }
+            {entry.healthCheckRating === HealthCheckRating.LowRisk && <Icon color="yellow" name="heart" /> }
+            {entry.healthCheckRating === HealthCheckRating.HighRisk && <Icon color="orange" name="heart" /> }
+            {entry.healthCheckRating === HealthCheckRating.CriticalRisk && <Icon color="red" name="heart" /> }
           </Card.Content>
         </Card>
       );
